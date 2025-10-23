@@ -1,1 +1,3 @@
-console.log("All tests passed!")
+console.error("❌ Test failed!")
+process.exit(1);
+
