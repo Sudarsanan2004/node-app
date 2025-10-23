@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Sudarsanan2004/node-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                sh 'mkdir -p build'
+                sh 'echo "Build completed!" > build/build_log.txt'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'node test.js > build/test_report.txt'
+                sh 'cat build/test_report.txt'
+            }
+        }
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'build/*.txt', fingerprint: true
+            }
+        }
+    }
+}
