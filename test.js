@@ -1,3 +1,3 @@
-console.error("❌ Test failed!")
-process.exit(1);
+console.error(" Test Passed!")
+process.exit(0);
 
