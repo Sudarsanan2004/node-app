@@ -2,28 +2,37 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout Code from githubcheckout scm
+                echo "Checked out code from GitHub') {
             steps {
                 git branch: 'main', url: 'https://github.com/Sudarsanan2004/node-app.git'
             }
         }
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'mkdir -p build'
-                sh 'echo "Build completed!" > build/build_log.txt'
+                checkout scm
+                echo "Checked out code from GitHub"
             }
         }
-        stage('Test') {
+        stage('Run index.js') {
             steps {
-                echo '🧪 Running tests...'
-                sh 'node test.js || echo "Test failed, but pipeline continues"'
+                echo '🧪 Running index.js...'
+                sh 'node index.js'
             }
         }
-        stage('Archive') {
+        stage('Run test.js') {
             steps {
-                archiveArtifacts artifacts: 'build/*.txt', fingerprint: true
+                echo ' Running test.js...'
+		sh 'node test.js'
             }
         }
+	post {
+            success {
+                echo "Pipeline completed successfully!"
+            }
+            failure {
+                echo "Pipeline failed!"
+            }
+    }
     }
 }
