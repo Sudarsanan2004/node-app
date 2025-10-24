@@ -2,37 +2,40 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code from githubcheckout scm
-                echo "Checked out code from GitHub') {
+        stage('Checkout Code from GitHub') {
             steps {
                 git branch: 'main', url: 'https://github.com/Sudarsanan2004/node-app.git'
-            }
-        }
-        stage('Build') {
-            steps {
-                checkout scm
                 echo "Checked out code from GitHub"
             }
         }
+
+        stage('Build') {
+            steps {
+                echo "Build stage - no build needed for this simple Node.js app"
+            }
+        }
+
         stage('Run index.js') {
             steps {
                 echo '🧪 Running index.js...'
                 sh 'node index.js'
             }
         }
+
         stage('Run test.js') {
             steps {
-                echo ' Running test.js...'
-		sh 'node test.js'
+                echo '🧪 Running test.js...'
+                sh 'node test.js'
             }
         }
-	 post {
+    }
+
+    post {
         success {
-            echo "Pipeline completed successfully!"
+            echo "✅ Pipeline completed successfully!"
         }
         failure {
-            echo "Pipeline failed!"
+            echo "❌ Pipeline failed!"
         }
-    }
     }
 }
